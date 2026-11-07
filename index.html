@@ -32,11 +32,23 @@
 
         <!-- Form Pencarian -->
         <div class="p-6 space-y-4">
+            
+            <!-- Banner Himbauan / Informasi Profesional -->
+            <div class="p-3.5 bg-amber-50 border border-amber-200/80 rounded-2xl flex items-start space-x-3 text-amber-900 shadow-sm">
+                <div class="text-amber-600 text-base mt-0.5 flex-shrink-0">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div class="text-xs leading-relaxed">
+                    <span class="font-bold block text-amber-950 mb-0.5">Petunjuk Pengisian:</span>
+                    Pastikan penulisan <strong>Nama Siswa</strong> dan <strong>Nama Ibu Kandung</strong> diisi lengkap <strong>sesuai Kartu Keluarga (KK)</strong> agar data dapat ditemukan oleh sistem.
+                </div>
+            </div>
+
             <div>
                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nama Lengkap Siswa</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" id="namaSiswa" placeholder="Contoh: DWI YUMNA NUR FAHIMA" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
+                    <input type="text" id="namaSiswa" placeholder="Ketik nama lengkap siswa sesuai KK" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
                 </div>
             </div>
 
@@ -44,7 +56,7 @@
                 <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nama Ibu Kandung</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-person-breastfeeding"></i></span>
-                    <input type="text" id="namaIbu" placeholder="Contoh: MUTHOHAROH" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
+                    <input type="text" id="namaIbu" placeholder="Ketik nama ibu kandung sesuai KK" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
                 </div>
             </div>
 
@@ -148,7 +160,7 @@
                     document.getElementById('modalResult').classList.remove('hidden');
                     document.getElementById('modalResult').classList.add('flex');
                 } else {
-                    alertBox.innerText = result.message || "Data tidak ditemukan. Pastikan ejaan sesuai dokumen resmi.";
+                    alertBox.innerText = result.message || "Data tidak ditemukan. Pastikan ejaan sesuai dokumen resmi (KK).";
                     alertBox.classList.remove('hidden');
                 }
             } catch (err) {
