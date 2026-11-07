@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Cek Akun RDM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #065f46 50%, #022c22 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 font-sans text-slate-800">
+
+    <div class="w-full max-w-md glass-card rounded-3xl shadow-2xl overflow-hidden my-auto">
+        <!-- Header Portal -->
+        <div class="bg-gradient-to-r from-emerald-700 to-teal-800 p-6 text-center text-white relative">
+            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-3 backdrop-blur-md border border-white/20 shadow-inner">
+                <i class="fa-solid fa-graduation-cap text-3xl text-emerald-300"></i>
+            </div>
+            <h1 class="text-2xl font-bold tracking-wide">PORTAL AKUN RDM</h1>
+            <p class="text-xs text-emerald-200 mt-1">Layanan Mandiri Perolehan Akses RDM Mobile</p>
+        </div>
+
+        <!-- Form Pencarian -->
+        <div class="p-6 space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nama Lengkap Siswa</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-user"></i></span>
+                    <input type="text" id="namaSiswa" placeholder="Contoh: DWI YUMNA NUR FAHIMA" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nama Ibu Kandung</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-solid fa-person-breastfeeding"></i></span>
+                    <input type="text" id="namaIbu" placeholder="Contoh: MUTHOHAROH" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400"><i class="fa-brands fa-whatsapp"></i></span>
+                    <input type="tel" id="noWa" placeholder="08xxxxxxxxxx" class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:bg-white transition text-sm">
+                </div>
+            </div>
+
+            <!-- Pesan Error / Alert -->
+            <div id="alertBox" class="hidden p-3 rounded-xl text-xs font-medium bg-rose-50 text-rose-600 border border-rose-200"></div>
+
+            <button onclick="cariAkun()" id="btnCari" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition transform active:scale-95 flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Cek & Dapatkan Akun</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Hasil Data Akun -->
+    <div id="modalResult" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center space-y-4 animate-fade-in">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            
+            <h2 class="text-xl font-bold text-slate-800">Akun Ditemukan!</h2>
+            <p id="resNama" class="text-xs text-slate-500 font-semibold"></p>
+
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3 text-left">
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">Username RDM</span>
+                    <div class="flex items-center justify-between mt-0.5">
+                        <span id="resUser" class="font-mono text-base font-bold text-slate-700"></span>
+                        <button onclick="copyText('resUser')" class="text-emerald-600 hover:text-emerald-700 text-xs font-semibold">Salin</button>
+                    </div>
+                </div>
+                <hr class="border-slate-200">
+                <div>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">Password RDM</span>
+                    <div class="flex items-center justify-between mt-0.5">
+                        <span id="resPass" class="font-mono text-base font-bold text-emerald-600"></span>
+                        <button onclick="copyText('resPass')" class="text-emerald-600 hover:text-emerald-700 text-xs font-semibold">Salin</button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="kirimPesanWA()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md flex items-center justify-center space-x-2 text-sm">
+                <i class="fa-brands fa-whatsapp text-base"></i>
+                <span>Simpan Rekapan ke WhatsApp</span>
+            </button>
+
+            <button onclick="closeModal()" class="text-xs text-slate-400 hover:text-slate-600 font-semibold pt-2">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // URL Apps Script milik Anda yang sudah dideploy
+        const API_URL = "https://script.google.com/macros/s/AKfycbyoYxExK2xWPFp__boHxvcjJFmSjkbcaAQpfAa_LT0tRZB5z7uCLUAx8Zhv4WXU81hZ/exec";
+        
+        let accountData = null;
+        let targetWa = "";
+
+        async function cariAkun() {
+            const namaSiswa = document.getElementById('namaSiswa').value.trim();
+            const namaIbu = document.getElementById('namaIbu').value.trim();
+            const noWa = document.getElementById('noWa').value.trim();
+            const alertBox = document.getElementById('alertBox');
+            const btnCari = document.getElementById('btnCari');
+
+            alertBox.classList.add('hidden');
+
+            if (!namaSiswa || !namaIbu || !noWa) {
+                alertBox.innerText = "Mohon lengkapi semua kolom isian.";
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            btnCari.disabled = true;
+            btnCari.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Mencari Data...</span>`;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ namaSiswa: namaSiswa, namaIbu: namaIbu })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    accountData = result.data;
+                    targetWa = noWa;
+                    
+                    document.getElementById('resNama').innerText = `${result.data.namaSiswa} (Kelas ${result.data.kelas})`;
+                    document.getElementById('resUser').innerText = result.data.username;
+                    document.getElementById('resPass').innerText = result.data.password;
+                    
+                    document.getElementById('modalResult').classList.remove('hidden');
+                    document.getElementById('modalResult').classList.add('flex');
+                } else {
+                    alertBox.innerText = result.message || "Data tidak ditemukan. Pastikan ejaan sesuai dokumen resmi.";
+                    alertBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                alertBox.innerText = "Terjadi kesalahan koneksi ke server. Coba beberapa saat lagi.";
+                alertBox.classList.remove('hidden');
+            } finally {
+                btnCari.disabled = false;
+                btnCari.innerHTML = `<i class="fa-solid fa-magnifying-glass"></i> <span>Cek & Dapatkan Akun</span>`;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modalResult').classList.add('hidden');
+            document.getElementById('modalResult').classList.remove('flex');
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text);
+            alert('Berhasil disalin: ' + text);
+        }
+
+        function kirimPesanWA() {
+            if (!accountData) return;
+            
+            let formattedWa = targetWa;
+            if (formattedWa.startsWith('0')) formattedWa = '62' + formattedWa.substring(1);
+
+            const text = `*AKUN LOGIN RDM MOBILE*\n\n` +
+                         `Nama: *${accountData.namaSiswa}*\n` +
+                         `Kelas: *${accountData.kelas}*\n\n` +
+                         `👤 *Username:* ${accountData.username}\n` +
+                         `🔑 *Password:* ${accountData.password}\n\n` +
+                         `_Silakan simpan pesan ini untuk login di aplikasi RDM Mobile._`;
+
+            const waUrl = `https://wa.me/${formattedWa}?text=${encodeURIComponent(text)}`;
+            window.open(waUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
